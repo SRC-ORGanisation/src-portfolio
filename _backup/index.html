@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SRC Studio — Code is Our Canvas</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,600;0,700;1,300;1,600&family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cur"></div>
+<div id="cur2"></div>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-letters">
+    <span class="loader-l s" id="ll-s">S</span>
+    <span class="loader-l r" id="ll-r">R</span>
+    <span class="loader-l c" id="ll-c">C</span>
+  </div>
+  <div class="loader-bar"><div class="loader-fill" id="lf"></div></div>
+  <p class="loader-text" id="lt">Initializing Studio</p>
+</div>
+
+<!-- BG PARTICLE CANVAS -->
+<canvas id="bgCanvas"></canvas>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo">SRC Studio</div>
+  <ul class="nav-links">
+    <li><a href="#story">Origin</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#services">Services</a></li>
+  </ul>
+  <a href="#cta" class="nav-btn"><span>Let's Build</span></a>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section id="hero">
+  <canvas id="heroCanvas"></canvas>
+
+  <!-- Floating UI cards -->
+  <div class="hero-float" style="top:22%;left:5%;animation:floatY 7s ease-in-out infinite">
+    <div class="float-card">
+      <div class="fc-label">Projects Shipped</div>
+      <div class="fc-val" style="color:var(--gold)">15+ ↑</div>
+    </div>
+  </div>
+  <div class="hero-float" style="top:30%;right:6%;animation:floatY 9s ease-in-out infinite;animation-delay:-3s">
+    <div class="float-card">
+      <div class="fc-label">Stack Coverage</div>
+      <div class="fc-val" style="color:var(--r)">Full ✦</div>
+    </div>
+  </div>
+  <div class="hero-float" style="bottom:25%;left:8%;animation:floatY2 8s ease-in-out infinite;animation-delay:-5s">
+    <div class="float-card">
+      <div class="fc-label">Response Time</div>
+      <div class="fc-val" style="color:var(--s)">48H ⚡</div>
+    </div>
+  </div>
+  <div class="hero-float" style="bottom:30%;right:7%;animation:floatY 10s ease-in-out infinite;animation-delay:-2s">
+    <div class="float-card">
+      <div class="fc-label">Client Satisfaction</div>
+      <div class="fc-val" style="color:var(--c)">100% ★</div>
+    </div>
+  </div>
+
+  <div class="hero-tag">Fullstack Product Studio — Est. 2024</div>
+  <h1 class="hero-h1">
+    <span class="h1-line1">We Don't</span>
+    <span class="h1-line2"><span class="h1-line2-text">Build Code</span></span>
+    <span class="h1-line1" style="font-size:.42em;letter-spacing:6px;opacity:.5">We Build Futures</span>
+  </h1>
+  <p class="hero-sub">Three minds. One obsession. Every project a masterpiece.<br>Saiteja × Ravi Kishore × Chakri</p>
+  <div class="hero-ctas">
+    <a href="#work" class="cta-main"><span>Explore Our Work</span></a>
+    <a href="#cta" class="cta-sec">Hire the Trio</a>
+  </div>
+  <div class="scroll-hint">
+    <p>Discover</p>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-inner">
+    <span class="marquee-item">FULLSTACK DEVELOPMENT</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">UI / UX DESIGN</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">REACT & NODE.JS</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">SAITEJA × RAVI KISHORE × CHAKRI</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">API INTEGRATION</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">CLOUD DEPLOYMENT</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">MOBILE APPS</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">FULLSTACK DEVELOPMENT</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">UI / UX DESIGN</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">REACT & NODE.JS</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">SAITEJA × RAVI KISHORE × CHAKRI</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">API INTEGRATION</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">CLOUD DEPLOYMENT</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">MOBILE APPS</span><span class="marquee-sep">✦</span>
+  </div>
+</div>
+
+<!-- ===== STORY ===== -->
+<section id="story" style="position:relative;overflow:hidden">
+  <!-- Animated orbital SVG -->
+  <div class="story-orbital" id="orbitalWrap" aria-hidden="true">
+    <svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Outer ring -->
+      <circle cx="250" cy="250" r="220" stroke="rgba(212,168,67,0.06)" stroke-width="1"/>
+      <circle cx="250" cy="250" r="180" stroke="rgba(212,168,67,0.05)" stroke-width="1" stroke-dasharray="6 8"/>
+      <circle cx="250" cy="250" r="140" stroke="rgba(255,61,26,0.08)" stroke-width="1"/>
+      <circle cx="250" cy="250" r="100" stroke="rgba(0,255,194,0.07)" stroke-width="1" stroke-dasharray="3 5"/>
+      <circle cx="250" cy="250" r="55" stroke="rgba(212,168,67,0.12)" stroke-width="1.5"/>
+      <!-- Center star -->
+      <circle cx="250" cy="250" r="18" fill="rgba(212,168,67,0.1)" stroke="rgba(212,168,67,0.4)" stroke-width="1"/>
+      <circle cx="250" cy="250" r="7" fill="var(--gold)" opacity="0.6"/>
+      <!-- Orbit dots S -->
+      <g id="orb-s" style="transform-origin:250px 250px;animation:orbitSpin 8s linear infinite">
+        <circle cx="250" cy="30" r="10" fill="var(--s)" opacity="0.9"/>
+        <circle cx="250" cy="30" r="18" fill="none" stroke="var(--s)" stroke-width="1" opacity="0.3"/>
+      </g>
+      <!-- Orbit dots R -->
+      <g id="orb-r" style="transform-origin:250px 250px;animation:orbitSpin 12s linear infinite reverse">
+        <circle cx="250" cy="70" r="8" fill="var(--r)" opacity="0.8"/>
+        <circle cx="250" cy="70" r="14" fill="none" stroke="var(--r)" stroke-width="1" opacity="0.25"/>
+      </g>
+      <!-- Orbit dots C -->
+      <g id="orb-c" style="transform-origin:250px 250px;animation:orbitSpin 6s linear infinite">
+        <circle cx="250" cy="110" r="9" fill="var(--c)" opacity="0.85"/>
+        <circle cx="250" cy="110" r="16" fill="none" stroke="var(--c)" stroke-width="1" opacity="0.3"/>
+      </g>
+      <!-- Glow lines -->
+      <line x1="250" y1="250" x2="250" y2="30" stroke="var(--s)" stroke-width="0.5" opacity="0.15" id="line-s" style="transform-origin:250px 250px;animation:orbitSpin 8s linear infinite"/>
+      <line x1="250" y1="250" x2="250" y2="70" stroke="var(--r)" stroke-width="0.5" opacity="0.1" id="line-r" style="transform-origin:250px 250px;animation:orbitSpin 12s linear infinite reverse"/>
+      <!-- Labels -->
+      <text x="255" y="24" fill="rgba(255,61,26,0.8)" font-family="'Bebas Neue'" font-size="11" letter-spacing="2">S</text>
+      <text x="255" y="65" fill="rgba(0,255,194,0.8)" font-family="'Bebas Neue'" font-size="10" letter-spacing="2">R</text>
+      <text x="255" y="107" fill="rgba(212,168,67,0.8)" font-family="'Bebas Neue'" font-size="10" letter-spacing="2">C</text>
+      <!-- Decorative marks -->
+      <line x1="30" y1="250" x2="470" y2="250" stroke="rgba(212,168,67,0.04)" stroke-width="1"/>
+      <line x1="250" y1="30" x2="250" y2="470" stroke="rgba(212,168,67,0.04)" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <div class="section-wrap">
+    <div class="story-grid">
+      <div class="reveal">
+        <div class="s-tag">Our Origin</div>
+        <h2 class="big-title">Three friends.<br>One <em>crazy</em><br>idea that<br>worked.</h2>
+        <div class="src-giant">
+          <span class="src-g-l s">S</span>
+          <span class="src-g-l r">R</span>
+          <span class="src-g-l c">C</span>
+        </div>
+      </div>
+      <div class="story-right reveal" style="transition-delay:.2s">
+        <p>It started at 2AM. Three engineers. One question: <strong>what if we stopped building someone else's dream?</strong></p>
+        <p><strong>Saiteja, Ravi Kishore, and Chakri</strong> — each a specialist, together unstoppable. We combined frontend mastery, backend precision, and fullstack versatility into a studio that punches above any agency.</p>
+        <p>Not freelancers. Not a side gig. A <strong>dedicated product studio</strong> that treats every project like our own startup. We argue over architecture at midnight because we care that much.</p>
+        <div class="stats-grid">
+          <div class="stat-box reveal" style="transition-delay:.1s">
+            <div class="stat-n" data-t="15" data-s="+">15+</div>
+            <div class="stat-l">Projects Shipped</div>
+          </div>
+          <div class="stat-box reveal" style="transition-delay:.2s">
+            <div class="stat-n" data-t="3" data-s="">3</div>
+            <div class="stat-l">Specialists</div>
+          </div>
+          <div class="stat-box reveal" style="transition-delay:.3s">
+            <div class="stat-n" data-t="100" data-s="%">100%</div>
+            <div class="stat-l">Satisfaction</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TEAM ===== -->
+<section id="team">
+  <div class="team-bg-text">S · R · C</div>
+  <div class="section-wrap">
+    <div class="team-header reveal">
+      <div class="s-tag" style="justify-content:center">The Three Pillars</div>
+      <h2>Meet the <span>architects</span><br>of your next product</h2>
+    </div>
+    <div class="team-cards">
+
+      <!-- SAITEJA -->
+      <div class="t-card tc-s reveal">
+        <div class="t-bg-letter">S</div>
+        <!-- Avatar SVG -->
+        <div class="t-avatar" style="animation:glowPulse 3s ease-in-out infinite">
+          <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="av-s" cx="50%" cy="30%" r="60%">
+                <stop offset="0%" stop-color="#FF6B50"/>
+                <stop offset="100%" stop-color="#FF1A00"/>
+              </radialGradient>
+            </defs>
+            <circle cx="40" cy="40" r="40" fill="rgba(255,61,26,0.12)"/>
+            <circle cx="40" cy="40" r="32" fill="none" stroke="rgba(255,61,26,0.3)" stroke-width="1"/>
+            <!-- Face shape -->
+            <ellipse cx="40" cy="34" rx="16" ry="18" fill="url(#av-s)" opacity="0.9"/>
+            <!-- Hair -->
+            <path d="M24 28 Q24 14 40 12 Q56 14 56 28 Q50 18 40 17 Q30 18 24 28Z" fill="rgba(20,10,5,0.9)"/>
+            <!-- Eyes -->
+            <ellipse cx="34" cy="31" rx="3" ry="3.5" fill="#1a0800"/>
+            <ellipse cx="46" cy="31" rx="3" ry="3.5" fill="#1a0800"/>
+            <circle cx="35" cy="30" r="1.2" fill="rgba(255,255,255,0.9)"/>
+            <circle cx="47" cy="30" r="1.2" fill="rgba(255,255,255,0.9)"/>
+            <!-- Smile -->
+            <path d="M34 40 Q40 44 46 40" stroke="#1a0800" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <!-- Body -->
+            <path d="M18 70 Q20 54 40 52 Q60 54 62 70" fill="rgba(255,61,26,0.25)"/>
+            <!-- Code icon on shirt -->
+            <text x="33" y="65" font-family="monospace" font-size="8" fill="rgba(255,61,26,0.6)">&lt;/&gt;</text>
+            <!-- Glow ring -->
+            <circle cx="40" cy="40" r="38" fill="none" stroke="rgba(255,61,26,0.15)" stroke-width="2" stroke-dasharray="4 6"/>
+          </svg>
+        </div>
+        <div class="t-role">Frontend Architect</div>
+        <div class="t-name">Sai Teja</div>
+        <div class="t-quote">"I make browsers jealous"</div>
+        <p class="t-desc">The visual alchemist. Saiteja sees the finished product before a single keystroke. He transforms wireframes into living, breathing interfaces that feel inevitable — like they couldn't have been built any other way.</p>
+        <div class="t-skills">
+          <span class="t-sk">React</span><span class="t-sk">Next.js</span><span class="t-sk">TypeScript</span><span class="t-sk">Tailwind</span><span class="t-sk">Figma</span><span class="t-sk">GSAP</span><span class="t-sk">Three.js</span>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="sb-row"><span class="sb-name">React</span><div class="sb-track"><div class="sb-fill" data-w="96" style="background:var(--s)"></div></div><span class="sb-pct">96%</span></div>
+          <div class="sb-row"><span class="sb-name">UI/UX</span><div class="sb-track"><div class="sb-fill" data-w="92" style="background:var(--s)"></div></div><span class="sb-pct">92%</span></div>
+          <div class="sb-row"><span class="sb-name">Animation</span><div class="sb-track"><div class="sb-fill" data-w="88" style="background:var(--s)"></div></div><span class="sb-pct">88%</span></div>
+        </div>
+        <a href="#" class="t-link">View Portfolio</a>
+      </div>
+
+      <!-- RAVI KISHORE -->
+      <div class="t-card tc-r reveal" style="transition-delay:.15s">
+        <div class="t-bg-letter">R</div>
+        <div class="t-avatar" style="animation:glowPulse 3.5s ease-in-out infinite;animation-delay:-1s">
+          <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="av-r" cx="50%" cy="30%" r="60%">
+                <stop offset="0%" stop-color="#40FFD0"/>
+                <stop offset="100%" stop-color="#00C890"/>
+              </radialGradient>
+            </defs>
+            <circle cx="40" cy="40" r="40" fill="rgba(0,255,194,0.1)"/>
+            <circle cx="40" cy="40" r="32" fill="none" stroke="rgba(0,255,194,0.25)" stroke-width="1"/>
+            <ellipse cx="40" cy="34" rx="16" ry="18" fill="url(#av-r)" opacity="0.85"/>
+            <path d="M24 30 Q24 14 40 12 Q56 14 56 30 Q51 20 40 19 Q29 20 24 30Z" fill="rgba(10,25,20,0.95)"/>
+            <ellipse cx="34" cy="31" rx="3" ry="3.5" fill="#051510"/>
+            <ellipse cx="46" cy="31" rx="3" ry="3.5" fill="#051510"/>
+            <circle cx="35" cy="30" r="1.2" fill="rgba(255,255,255,0.9)"/>
+            <circle cx="47" cy="30" r="1.2" fill="rgba(255,255,255,0.9)"/>
+            <path d="M34 40 Q40 44 46 40" stroke="#051510" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <!-- Glasses -->
+            <rect x="29" y="27" width="11" height="8" rx="2" fill="none" stroke="rgba(0,255,194,0.5)" stroke-width="1"/>
+            <rect x="41" y="27" width="11" height="8" rx="2" fill="none" stroke="rgba(0,255,194,0.5)" stroke-width="1"/>
+            <line x1="40" y1="31" x2="41" y2="31" stroke="rgba(0,255,194,0.5)" stroke-width="1"/>
+            <path d="M18 70 Q20 54 40 52 Q60 54 62 70" fill="rgba(0,255,194,0.2)"/>
+            <text x="33" y="65" font-family="monospace" font-size="7" fill="rgba(0,255,194,0.6)">{API}</text>
+            <circle cx="40" cy="40" r="38" fill="none" stroke="rgba(0,255,194,0.12)" stroke-width="2" stroke-dasharray="2 4"/>
+          </svg>
+        </div>
+        <div class="t-role">Backend Engineer</div>
+        <div class="t-name">Ravi Kishore</div>
+        <div class="t-quote">"Your data's safest hands"</div>
+        <p class="t-desc">The architect of invisible excellence. Ravi builds the systems that never break. APIs that sing, databases that scale, and server logic so clean it reads like literature.</p>
+        <div class="t-skills">
+          <span class="t-sk">Node.js</span><span class="t-sk">Python</span><span class="t-sk">PostgreSQL</span><span class="t-sk">MongoDB</span><span class="t-sk">AWS</span><span class="t-sk">Docker</span><span class="t-sk">Redis</span>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="sb-row"><span class="sb-name">Node.js</span><div class="sb-track"><div class="sb-fill" data-w="97" style="background:var(--r)"></div></div><span class="sb-pct">97%</span></div>
+          <div class="sb-row"><span class="sb-name">DB Design</span><div class="sb-track"><div class="sb-fill" data-w="94" style="background:var(--r)"></div></div><span class="sb-pct">94%</span></div>
+          <div class="sb-row"><span class="sb-name">DevOps</span><div class="sb-track"><div class="sb-fill" data-w="89" style="background:var(--r)"></div></div><span class="sb-pct">89%</span></div>
+        </div>
+        <a href="#" class="t-link">View Portfolio</a>
+      </div>
+
+      <!-- CHAKRI -->
+      <div class="t-card tc-c reveal" style="transition-delay:.3s">
+        <div class="t-bg-letter">C</div>
+        <div class="t-avatar" style="animation:glowPulse 4s ease-in-out infinite;animation-delay:-2s">
+          <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="av-c" cx="50%" cy="30%" r="60%">
+                <stop offset="0%" stop-color="#E8C060"/>
+                <stop offset="100%" stop-color="#B8860B"/>
+              </radialGradient>
+            </defs>
+            <circle cx="40" cy="40" r="40" fill="rgba(212,168,67,0.1)"/>
+            <circle cx="40" cy="40" r="32" fill="none" stroke="rgba(212,168,67,0.25)" stroke-width="1"/>
+            <ellipse cx="40" cy="34" rx="16" ry="18" fill="url(#av-c)" opacity="0.9"/>
+            <path d="M24 32 Q23 14 40 11 Q57 14 56 32 Q50 22 40 21 Q30 22 24 32Z" fill="rgba(15,10,0,0.95)"/>
+            <ellipse cx="34" cy="31" rx="3" ry="3.5" fill="#100800"/>
+            <ellipse cx="46" cy="31" rx="3" ry="3.5" fill="#100800"/>
+            <circle cx="35" cy="30" r="1.2" fill="rgba(255,255,255,0.9)"/>
+            <circle cx="47" cy="30" r="1.2" fill="rgba(255,255,255,0.9)"/>
+            <path d="M34 40 Q40 44 46 40" stroke="#100800" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <!-- Headphones -->
+            <path d="M22 30 Q22 14 40 14 Q58 14 58 30" fill="none" stroke="rgba(212,168,67,0.6)" stroke-width="2.5" stroke-linecap="round"/>
+            <rect x="20" y="28" width="6" height="10" rx="3" fill="rgba(212,168,67,0.5)"/>
+            <rect x="54" y="28" width="6" height="10" rx="3" fill="rgba(212,168,67,0.5)"/>
+            <path d="M18 70 Q20 54 40 52 Q60 54 62 70" fill="rgba(212,168,67,0.18)"/>
+            <text x="33" y="65" font-family="monospace" font-size="7" fill="rgba(212,168,67,0.6)">∞ FS</text>
+            <circle cx="40" cy="40" r="38" fill="none" stroke="rgba(212,168,67,0.12)" stroke-width="2" stroke-dasharray="8 4"/>
+          </svg>
+        </div>
+        <div class="t-role">Fullstack & DevOps</div>
+        <div class="t-name">Chakri</div>
+        <div class="t-quote">"I ship, therefore I am"</div>
+        <p class="t-desc">The bridge between worlds. Fluent in frontend elegance and backend power, Chakri is the one who brings both halves together and makes sure everything actually reaches your users, running perfectly.</p>
+        <div class="t-skills">
+          <span class="t-sk">Vue.js</span><span class="t-sk">Express</span><span class="t-sk">CI/CD</span><span class="t-sk">Firebase</span><span class="t-sk">Linux</span><span class="t-sk">GraphQL</span><span class="t-sk">K8s</span>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="sb-row"><span class="sb-name">Fullstack</span><div class="sb-track"><div class="sb-fill" data-w="93" style="background:var(--c)"></div></div><span class="sb-pct">93%</span></div>
+          <div class="sb-row"><span class="sb-name">DevOps</span><div class="sb-track"><div class="sb-fill" data-w="91" style="background:var(--c)"></div></div><span class="sb-pct">91%</span></div>
+          <div class="sb-row"><span class="sb-name">Infra</span><div class="sb-track"><div class="sb-fill" data-w="85" style="background:var(--c)"></div></div><span class="sb-pct">85%</span></div>
+        </div>
+        <a href="#" class="t-link">View Portfolio</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== WORK ===== -->
+<section id="work">
+  <div class="section-wrap">
+    <div class="work-head reveal">
+      <div>
+        <div class="s-tag">Selected Work</div>
+        <h2>What We've<br>Built</h2>
+      </div>
+      <div class="work-meta">15+ Projects<br>Delivered<br>On Time</div>
+    </div>
+    <div class="projects">
+
+      <!-- P1 Featured -->
+      <div class="proj p1 reveal">
+        <div class="proj-inner">
+          <div class="proj-bg"></div>
+          <!-- Animated SVG decoration -->
+          <svg class="proj-deco" style="top:5%;right:5%;width:320px;height:320px;opacity:.12" viewBox="0 0 300 300">
+            <g style="animation:spin 30s linear infinite;transform-origin:150px 150px">
+              <circle cx="150" cy="150" r="120" fill="none" stroke="#FF3D1A" stroke-width="1" stroke-dasharray="8 12"/>
+            </g>
+            <g style="animation:spinR 20s linear infinite;transform-origin:150px 150px">
+              <circle cx="150" cy="150" r="90" fill="none" stroke="#00FFC2" stroke-width="1" stroke-dasharray="4 6"/>
+            </g>
+            <circle cx="150" cy="150" r="60" fill="none" stroke="#D4A843" stroke-width="1.5"/>
+            <g style="animation:spin 15s linear infinite;transform-origin:150px 150px">
+              <circle cx="150" cy="30" r="10" fill="#FF3D1A" opacity="0.8"/>
+              <circle cx="150" cy="270" r="8" fill="#00FFC2" opacity="0.7"/>
+            </g>
+            <circle cx="150" cy="150" r="20" fill="none" stroke="#D4A843" stroke-width="2"/>
+            <circle cx="150" cy="150" r="6" fill="#D4A843" opacity="0.7"/>
+          </svg>
+        </div>
+        <div class="proj-overlay"></div>
+        <div class="proj-tag">Featured · 2024</div>
+        <div class="proj-arrow">↗</div>
+        <div class="proj-content">
+          <div class="proj-num">PROJECT 01 — SAAS PLATFORM</div>
+          <div class="proj-name">Nexus — Analytics &amp;<br>Dashboard Platform</div>
+          <div class="proj-stack">React · Node.js · PostgreSQL · AWS · Stripe</div>
+        </div>
+      </div>
+
+      <!-- P2 -->
+      <div class="proj p2 reveal" style="transition-delay:.1s">
+        <div class="proj-inner">
+          <div class="proj-bg"></div>
+          <svg class="proj-deco" style="top:10%;right:8%;width:220px;height:220px;opacity:.1" viewBox="0 0 200 200">
+            <g style="animation:spin 25s linear infinite;transform-origin:100px 100px">
+              <rect x="20" y="20" width="160" height="160" fill="none" stroke="#00FFC2" stroke-width="1" stroke-dasharray="5 8"/>
+            </g>
+            <rect x="45" y="45" width="110" height="110" fill="none" stroke="#D4A843" stroke-width="1" style="animation:spinR 18s linear infinite;transform-origin:100px 100px"/>
+            <circle cx="100" cy="100" r="30" fill="none" stroke="#00FFC2" stroke-width="2"/>
+            <circle cx="100" cy="100" r="8" fill="#00FFC2" opacity="0.6"/>
+          </svg>
+        </div>
+        <div class="proj-overlay"></div>
+        <div class="proj-tag">E-Commerce</div>
+        <div class="proj-arrow">↗</div>
+        <div class="proj-content">
+          <div class="proj-num">PROJECT 02</div>
+          <div class="proj-name">Bloom — Marketplace Platform</div>
+          <div class="proj-stack">Next.js · Stripe · MongoDB · Vercel</div>
+        </div>
+      </div>
+
+      <!-- P3 -->
+      <div class="proj p3 reveal" style="transition-delay:.2s">
+        <div class="proj-inner">
+          <div class="proj-bg"></div>
+          <svg class="proj-deco" style="top:10%;right:8%;width:220px;height:220px;opacity:.1" viewBox="0 0 200 200">
+            <g style="animation:spin 20s linear infinite;transform-origin:100px 100px">
+              <polygon points="100,10 190,55 190,145 100,190 10,145 10,55" fill="none" stroke="#FF3D1A" stroke-width="1.5"/>
+            </g>
+            <g style="animation:spinR 28s linear infinite;transform-origin:100px 100px">
+              <polygon points="100,35 165,70 165,130 100,165 35,130 35,70" fill="none" stroke="#D4A843" stroke-width="1"/>
+            </g>
+            <circle cx="100" cy="100" r="25" fill="none" stroke="#FF3D1A" stroke-width="2"/>
+            <circle cx="100" cy="100" r="7" fill="#FF3D1A" opacity="0.6"/>
+          </svg>
+        </div>
+        <div class="proj-overlay"></div>
+        <div class="proj-tag">Fintech</div>
+        <div class="proj-arrow">↗</div>
+        <div class="proj-content">
+          <div class="proj-num">PROJECT 03</div>
+          <div class="proj-name">Vault — Finance Tracker</div>
+          <div class="proj-stack">Vue.js · Python · Firebase · Plaid API</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== SERVICES ===== -->
+<section id="services">
+  <div class="section-wrap">
+    <div class="svc-head reveal">
+      <h2>What We<br>Do Best</h2>
+      <p>Three specialists. One seamless studio. No handoff chaos, no communication gaps — just clean code, beautiful design, and systems that scale from launch to 1M users.</p>
+    </div>
+    <div class="svc-grid">
+
+      <div class="svc reveal">
+        <div class="svc-ico">
+          <svg viewBox="0 0 56 56" fill="none">
+            <circle cx="28" cy="28" r="26" stroke="rgba(212,168,67,0.2)" stroke-width="1"/>
+            <path d="M16 28 L22 22 L28 28 L34 22 L40 28" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" fill="none"/>
+            <path d="M16 35 L22 29 L28 35 L34 29 L40 35" stroke="rgba(212,168,67,0.4)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="svc-num">01</div>
+        <div class="svc-n">Fullstack Web Apps</div>
+        <p class="svc-d">End-to-end applications. We architect, build, and deploy — from database schema to pixel-perfect UI, under one roof.</p>
+        <div class="svc-line"></div>
+      </div>
+
+      <div class="svc reveal" style="transition-delay:.1s">
+        <div class="svc-ico">
+          <svg viewBox="0 0 56 56" fill="none">
+            <rect x="8" y="12" width="40" height="28" rx="2" stroke="rgba(212,168,67,0.2)" stroke-width="1.5"/>
+            <path d="M18 22 L26 30 L36 18" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" fill="none"/>
+            <circle cx="28" cy="47" r="3" fill="rgba(212,168,67,0.4)"/>
+          </svg>
+        </div>
+        <div class="svc-num">02</div>
+        <div class="svc-n">UI/UX Design</div>
+        <p class="svc-d">Interfaces that convert, not just impress. We design with user psychology baked in, not bolted on after.</p>
+        <div class="svc-line"></div>
+      </div>
+
+      <div class="svc reveal" style="transition-delay:.2s">
+        <div class="svc-ico">
+          <svg viewBox="0 0 56 56" fill="none">
+            <circle cx="28" cy="28" r="12" stroke="var(--gold)" stroke-width="1.5"/>
+            <circle cx="28" cy="28" r="22" stroke="rgba(212,168,67,0.2)" stroke-width="1" stroke-dasharray="4 6"/>
+            <circle cx="28" cy="6" r="4" fill="rgba(212,168,67,0.6)"/>
+            <circle cx="50" cy="28" r="4" fill="rgba(212,168,67,0.4)"/>
+            <circle cx="28" cy="50" r="4" fill="rgba(212,168,67,0.3)"/>
+          </svg>
+        </div>
+        <div class="svc-num">03</div>
+        <div class="svc-n">API & Backend Systems</div>
+        <p class="svc-d">RESTful, GraphQL, microservices. Scalable, documented, battle-tested APIs that your frontend team will actually enjoy consuming.</p>
+        <div class="svc-line"></div>
+      </div>
+
+      <div class="svc reveal" style="transition-delay:.3s">
+        <div class="svc-ico">
+          <svg viewBox="0 0 56 56" fill="none">
+            <rect x="14" y="8" width="28" height="40" rx="4" stroke="rgba(212,168,67,0.2)" stroke-width="1.5"/>
+            <rect x="18" y="14" width="20" height="26" rx="1" fill="rgba(212,168,67,0.05)" stroke="var(--gold)" stroke-width="1"/>
+            <circle cx="28" cy="44" r="2" fill="rgba(212,168,67,0.5)"/>
+            <path d="M22 22 L34 22 M22 27 L34 27 M22 32 L30 32" stroke="rgba(212,168,67,0.4)" stroke-width="1" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="svc-num">04</div>
+        <div class="svc-n">Mobile-First Development</div>
+        <p class="svc-d">Responsive isn't a checkbox — it's a philosophy. Every interface we build feels native on every screen, every device.</p>
+        <div class="svc-line"></div>
+      </div>
+
+      <div class="svc reveal" style="transition-delay:.4s">
+        <div class="svc-ico">
+          <svg viewBox="0 0 56 56" fill="none">
+            <rect x="6" y="18" width="44" height="24" rx="2" stroke="rgba(212,168,67,0.2)" stroke-width="1.5"/>
+            <circle cx="14" cy="30" r="4" fill="rgba(212,168,67,0.3)"/>
+            <circle cx="28" cy="30" r="4" fill="var(--gold)" opacity="0.6"/>
+            <circle cx="42" cy="30" r="4" fill="rgba(212,168,67,0.3)"/>
+            <path d="M18 30 L24 30 M32 30 L38 30" stroke="rgba(212,168,67,0.3)" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="svc-num">05</div>
+        <div class="svc-n">Cloud & DevOps</div>
+        <p class="svc-d">AWS, Docker, Kubernetes, CI/CD pipelines. Your product ships fast, scales gracefully, and stays online. No exceptions.</p>
+        <div class="svc-line"></div>
+      </div>
+
+      <div class="svc reveal" style="transition-delay:.5s">
+        <div class="svc-ico">
+          <svg viewBox="0 0 56 56" fill="none">
+            <ellipse cx="28" cy="22" rx="20" ry="8" stroke="var(--gold)" stroke-width="1.5" opacity="0.7"/>
+            <path d="M8 22 Q8 38 28 44 Q48 38 48 22" stroke="rgba(212,168,67,0.3)" stroke-width="1.5" fill="none"/>
+            <ellipse cx="28" cy="22" rx="20" ry="8" stroke="rgba(212,168,67,0.15)" stroke-width="1" fill="rgba(212,168,67,0.04)"/>
+            <path d="M8 30 Q8 40 28 44 Q48 40 48 30" stroke="rgba(212,168,67,0.2)" stroke-width="1" fill="none"/>
+          </svg>
+        </div>
+        <div class="svc-num">06</div>
+        <div class="svc-n">Database Architecture</div>
+        <p class="svc-d">Schemas that breathe. Whether SQL or NoSQL, normalized or document-based — we design for the product you're building next year, not just today.</p>
+        <div class="svc-line"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROCESS ===== -->
+<section id="process">
+  <div class="proc-bg-text">PROCESS</div>
+  <div class="section-wrap" style="position:relative;z-index:1">
+    <div class="proc-head reveal">
+      <div class="s-tag">How We Work</div>
+      <h2>Our <em>obsessive</em><br>four-step ritual</h2>
+    </div>
+    <div class="proc-steps">
+      <div class="p-step reveal">
+        <div class="ps-num">01</div>
+        <div class="ps-t">Deep Discovery</div>
+        <p class="ps-d">We don't start with code. We start with ruthless questions. What problem, who for, what does real success look like at 1000 users?</p>
+        <div class="ps-ico">🔍</div>
+      </div>
+      <div class="p-step reveal" style="transition-delay:.1s">
+        <div class="ps-num">02</div>
+        <div class="ps-t">Design Sprint</div>
+        <p class="ps-d">Wireframes, prototypes, component libraries. You see the product before we write a single migration. No surprises.</p>
+        <div class="ps-ico">✦</div>
+      </div>
+      <div class="p-step reveal" style="transition-delay:.2s">
+        <div class="ps-num">03</div>
+        <div class="ps-t">Agile Build</div>
+        <p class="ps-d">Weekly sprints. Live staging demos. Transparent Notion boards. You're never in the dark about what's happening or why.</p>
+        <div class="ps-ico">⚡</div>
+      </div>
+      <div class="p-step reveal" style="transition-delay:.3s">
+        <div class="ps-num">04</div>
+        <div class="ps-t">Launch + Beyond</div>
+        <p class="ps-d">Go-live is act one, not the finale. We monitor, optimize, and support. Your growth is our portfolio.</p>
+        <div class="ps-ico">🚀</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TESTIMONIAL ===== -->
+<section id="testimonial">
+  <!-- Animated rings background -->
+  <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;overflow:hidden">
+    <svg width="800" height="800" viewBox="0 0 800 800" style="opacity:.04;animation:spin 60s linear infinite">
+      <circle cx="400" cy="400" r="350" fill="none" stroke="var(--gold)" stroke-width="1" stroke-dasharray="10 15"/>
+      <circle cx="400" cy="400" r="280" fill="none" stroke="var(--gold)" stroke-width="1"/>
+      <circle cx="400" cy="400" r="200" fill="none" stroke="var(--gold)" stroke-width="1" stroke-dasharray="5 8"/>
+    </svg>
+  </div>
+  <div class="section-wrap">
+    <div class="testi-inner reveal">
+      <div class="testi-stars">
+        <span class="star" style="animation-delay:.1s">★</span>
+        <span class="star" style="animation-delay:.2s">★</span>
+        <span class="star" style="animation-delay:.3s">★</span>
+        <span class="star" style="animation-delay:.4s">★</span>
+        <span class="star" style="animation-delay:.5s">★</span>
+      </div>
+      <p class="testi-q">Working with SRC Studio felt less like hiring freelancers and more like having three co-founders who happened to be engineering geniuses. The product they delivered was beyond our expectations — and they were early.</p>
+      <div class="testi-au">— Founder, Nexus Platform</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section id="cta">
+  <div class="cta-glow"></div>
+  <div class="cta-stripe"></div>
+  <!-- Floating SRC letters -->
+  <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;overflow:hidden">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:40vw;color:rgba(242,237,228,.012);line-height:1;letter-spacing:-20px;animation:pulse 6s ease-in-out infinite">SRC</div>
+  </div>
+  <div class="section-wrap">
+    <div class="cta-inner reveal">
+      <div class="cta-tag">Ready to build something legendary?</div>
+      <h2 class="cta-h">
+        <span class="w1">Let's</span>
+        <span class="w2">Work.</span>
+      </h2>
+      <a href="mailto:hello@srcstudio.dev" class="cta-mail">hello@srcstudio.dev</a>
+      <div style="display:flex;gap:20px;justify-content:center">
+        <a href="mailto:hello@srcstudio.dev" class="cta-main"><span>Start a Project</span></a>
+        <a href="#story" class="cta-sec">Our Story</a>
+      </div>
+      <div class="cta-badges">
+        <div class="cb"><div class="cb-n">48H</div><div class="cb-l">Response Time</div></div>
+        <div class="cb"><div class="cb-n">NDA</div><div class="cb-l">Ready Always</div></div>
+        <div class="cb"><div class="cb-n">3×</div><div class="cb-l">The Expertise</div></div>
+        <div class="cb"><div class="cb-n">∞</div><div class="cb-l">Scalability</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">SRC Studio</div>
+  <p class="f-copy">© 2024 SRC Studio · Saiteja · Ravi Kishore · Chakri</p>
+  <ul class="f-links">
+    <li><a href="#story">Story</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#cta">Contact</a></li>
+  </ul>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
