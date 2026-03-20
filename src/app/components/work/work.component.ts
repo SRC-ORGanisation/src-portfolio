@@ -84,54 +84,68 @@ import { RevealDirective } from '../../directives/reveal.directive';
       display: flex; 
       align-items: flex-end; 
       padding: 48px;
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(212,168,67,.04);
-      transition: border-color .4s;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255,255,255,.03);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      transition: all .5s var(--ease-out-expo);
     }
-    .proj:hover { border-color: rgba(212,168,67,.12); }
+    .proj:hover { 
+      border-color: rgba(255,255,255,.1); 
+      transform: translateY(-8px);
+    }
     .proj:first-child { grid-column: span 2; aspect-ratio: 21/9; }
     .proj-inner { position: absolute; inset: 0; transition: transform .7s var(--ease-out-expo); }
     .proj:hover .proj-inner { transform: scale(1.04); }
     .proj-bg { position: absolute; inset: 0; }
-    .p1 .proj-bg { background: radial-gradient(ellipse 70% 80% at 15% 60%, rgba(255,61,26,.14) 0%, transparent 65%), radial-gradient(ellipse 50% 70% at 85% 20%, rgba(0,255,194,.09) 0%, transparent 65%), linear-gradient(145deg, #080816 0%, #12102A 100%); }
-    .p2 .proj-bg { background: radial-gradient(ellipse 60% 80% at 80% 40%, rgba(0,255,194,.1) 0%, transparent 65%), linear-gradient(145deg, #080E14 0%, #0A1A1A 100%); }
-    .p3 .proj-bg { background: radial-gradient(ellipse 60% 80% at 20% 60%, rgba(255,61,26,.1) 0%, transparent 65%), linear-gradient(145deg, #140808 0%, #1A1008 100%); }
+    .p1 .proj-bg { background: linear-gradient(145deg, rgba(255,61,26,.05) 0%, transparent 100%); }
+    .p2 .proj-bg { background: linear-gradient(145deg, rgba(0,255,194,.05) 0%, transparent 100%); }
+    .p3 .proj-bg { background: linear-gradient(145deg, rgba(212,168,67,.05) 0%, transparent 100%); }
     .proj-overlay { 
       position: absolute; inset: 0; 
-      background: linear-gradient(to top, rgba(3,3,10,.92) 0%, rgba(3,3,10,.25) 55%, transparent 100%);
-      transition: background .5s;
+      background: linear-gradient(to top, rgba(3,3,10,0.95) 0%, rgba(3,3,10,0.4) 40%, transparent 100%);
+      transition: opacity .5s ease;
+      z-index: 1;
     }
     .proj:hover .proj-overlay {
-      background: linear-gradient(to top, rgba(3,3,10,.85) 0%, rgba(3,3,10,.15) 55%, transparent 100%);
+      opacity: 0.8;
     }
     .proj-content { position: relative; z-index: 2; }
     .proj-num { font-family: 'JetBrains Mono', monospace; font-size: .55rem; letter-spacing: 4px; color: rgba(212,168,67,.5); text-transform: uppercase; margin-bottom: 10px; }
     .proj-name { 
       font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3vw, 3rem); font-weight: 700; 
-      margin-bottom: 10px; line-height: 1.1;
-      transition: text-shadow .4s;
+      margin-bottom: 15px; line-height: 1.1; color: var(--white);
+      transition: text-shadow .4s, transform .5s var(--ease-out-expo);
     }
-    .proj:hover .proj-name { text-shadow: 0 0 30px rgba(212,168,67,.15); }
+    .proj:hover .proj-name { 
+      text-shadow: 0 0 40px rgba(255,255,255,.3); 
+      transform: translateY(-4px); 
+    }
     .proj-stack { font-family: 'JetBrains Mono', monospace; font-size: .58rem; letter-spacing: 2px; color: rgba(242,237,228,.3); text-transform: uppercase; }
     .proj-arrow { 
       position: absolute; top: 36px; right: 36px; width: 52px; height: 52px; 
-      border: 1px solid rgba(212,168,67,.2); 
+      border: 1px solid rgba(255,255,255,.1); 
       display: flex; align-items: center; justify-content: center; 
-      color: var(--gold); font-size: 1.3rem; z-index: 2; 
-      opacity: 0; transform: translate(15px, -15px); 
-      transition: all .5s var(--ease-out-expo);
-      border-radius: var(--radius-sm);
-      backdrop-filter: blur(8px);
-      background: rgba(3,3,10,.4);
+      color: var(--white); font-size: 1.3rem; z-index: 2; 
+      opacity: 0; transform: translate(15px, -15px) rotate(-45deg); 
+      transition: all .6s var(--ease-out-expo);
+      border-radius: 50%;
+      backdrop-filter: blur(12px);
+      background: rgba(255,255,255,.05);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
-    .proj:hover .proj-arrow { opacity: 1; transform: translate(0,0); }
+    .proj:hover .proj-arrow { 
+      opacity: 1; 
+      transform: translate(0,0) rotate(0deg); 
+      background: var(--white);
+      color: var(--bg);
+    }
     .proj-tag { 
       position: absolute; top: 36px; left: 36px; 
       font-family: 'JetBrains Mono', monospace; font-size: .52rem; letter-spacing: 3px; 
       text-transform: uppercase; padding: 7px 14px; 
-      background: rgba(212,168,67,.08); border: 1px solid rgba(212,168,67,.15); 
-      color: var(--gold); z-index: 2;
-      border-radius: 4px;
+      background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); 
+      color: var(--white); z-index: 2;
+      border-radius: 20px;
       backdrop-filter: blur(8px);
     }
     .proj-deco { position: absolute; z-index: 1; pointer-events: none; transition: transform .7s var(--ease-out-expo); }
@@ -150,14 +164,19 @@ import { RevealDirective } from '../../directives/reveal.directive';
       width: 100%;
       height: 100%;
       object-fit: cover;
-      opacity: 0.6;
-      transition: transform .7s var(--ease-out-expo), opacity .7s var(--ease-out-expo);
-      z-index: 1;
+      opacity: 0.85;
+      filter: grayscale(20%) contrast(1.1);
+      transition: transform 1s var(--ease-out-expo), opacity .8s ease, filter .8s ease;
+      z-index: 0;
     }
     .proj:hover .proj-img {
-      transform: scale(1.05);
-      opacity: 0.8;
+      transform: scale(1.08);
+      opacity: 1;
+      filter: grayscale(0%) contrast(1.15) brightness(1.1);
     }
+    .p1:hover { box-shadow: 0 20px 60px rgba(255,61,26,0.15), 0 0 20px rgba(255,61,26,0.05); border-color: rgba(255,61,26,0.3); }
+    .p2:hover { box-shadow: 0 20px 60px rgba(0,255,194,0.15), 0 0 20px rgba(0,255,194,0.05); border-color: rgba(0,255,194,0.3); }
+    .p3:hover { box-shadow: 0 20px 60px rgba(212,168,67,0.15), 0 0 20px rgba(212,168,67,0.05); border-color: rgba(212,168,67,0.3); }
   `],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

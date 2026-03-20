@@ -1,11 +1,11 @@
-import { Component, AfterViewInit, OnDestroy, ElementRef, ViewChild, ChangeDetectionStrategy, HostListener } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy, ElementRef, ViewChild, ChangeDetectionStrategy, HostListener, NgZone } from '@angular/core';
 import { MagneticDirective } from '../../directives/magnetic.directive';
 
 @Component({
-    selector: 'app-hero',
-    standalone: true,
-    imports: [MagneticDirective],
-    template: `
+  selector: 'app-hero',
+  standalone: true,
+  imports: [MagneticDirective],
+  template: `
     <section id="hero">
       <canvas #heroCanvas id="heroCanvas"></canvas>
 
@@ -35,14 +35,9 @@ import { MagneticDirective } from '../../directives/magnetic.directive';
         </div>
       </div>
 
-      <div class="hero-tag">
-        <span class="tag-line"></span>
-        <span class="tag-text">Fullstack Product Company — Est. 2024</span>
-        <span class="tag-line"></span>
-      </div>
       <h1 class="hero-h1">
         <span class="h1-line1">
-          <span class="h1-word" style="animation-delay:.6s">We</span>
+          <span class="h1-word" style="animation-delay:.6s">We&nbsp;</span>
           <span class="h1-word" style="animation-delay:.7s">Don't</span>
         </span>
         <span class="h1-line2"><span class="h1-line2-text h1-word" style="animation-delay:.85s">Build Code</span></span>
@@ -65,7 +60,7 @@ import { MagneticDirective } from '../../directives/magnetic.directive';
       </div>
     </section>
   `,
-    styles: [`
+  styles: [`
     :host { display: block; }
     #hero {
       min-height: 100vh;
@@ -100,6 +95,7 @@ import { MagneticDirective } from '../../directives/magnetic.directive';
       letter-spacing: 8px;
       color: var(--gold);
       text-transform: uppercase;
+      margin-top: 80px;
       margin-bottom: 36px;
       opacity: 0;
       animation: riseUp .8s .4s forwards;
@@ -274,143 +270,148 @@ import { MagneticDirective } from '../../directives/magnetic.directive';
       .hero-ctas { flex-direction: column; align-items: center; }
     }
   `],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroComponent implements AfterViewInit, OnDestroy {
-    @ViewChild('heroCanvas', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('heroCanvas', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>;
 
-    private ctx!: CanvasRenderingContext2D;
-    private hW = 0;
-    private hH = 0;
-    private hMx = 0;
-    private hMy = 0;
-    private heroAngle = 0;
-    private animId = 0;
+  private ctx!: CanvasRenderingContext2D;
+  private hW = 0;
+  private hH = 0;
+  private hMx = 0;
+  private hMy = 0;
+  private heroAngle = 0;
+  private animId = 0;
 
-    private resizeHandler = () => this.resizeHero();
+  constructor(private ngZone: NgZone) { }
 
-    ngAfterViewInit(): void {
-        const canvas = this.canvasRef.nativeElement;
-        this.ctx = canvas.getContext('2d')!;
-        this.resizeHero();
-        this.hMx = this.hW / 2;
-        this.hMy = this.hH / 2;
-        window.addEventListener('resize', this.resizeHandler);
-        this.drawHero();
+  private resizeHandler = () => this.resizeHero();
+
+  ngAfterViewInit(): void {
+    const canvas = this.canvasRef.nativeElement;
+    this.ctx = canvas.getContext('2d')!;
+    this.resizeHero();
+    this.hMx = this.hW / 2;
+    this.hMy = this.hH / 2;
+
+    this.ngZone.runOutsideAngular(() => {
+      window.addEventListener('resize', this.resizeHandler);
+      canvas.addEventListener('mousemove', (e) => this.onMouseMove(e));
+      this.drawHero();
+    });
+  }
+
+  private resizeHero(): void {
+    const canvas = this.canvasRef.nativeElement;
+    this.hW = canvas.width = canvas.offsetWidth;
+    this.hH = canvas.height = canvas.offsetHeight;
+  }
+
+  private onMouseMove(e: MouseEvent): void {
+    const rect = this.canvasRef.nativeElement.getBoundingClientRect();
+    this.hMx = e.clientX - rect.left;
+    this.hMy = e.clientY - rect.top;
+  }
+
+  private drawHero = (): void => {
+    const ctx = this.ctx;
+    ctx.clearRect(0, 0, this.hW, this.hH);
+    this.heroAngle += 0.002;
+
+    const cx = this.hW / 2;
+    const cy = this.hH / 2;
+    const ox = (this.hMx - cx) * 0.03;
+    const oy = (this.hMy - cy) * 0.03;
+
+    // Outer rotating rings — more rings, subtler
+    for (let ring = 0; ring < 6; ring++) {
+      const r = 100 + ring * 70;
+      const rot = this.heroAngle * (ring % 2 === 0 ? 1 : -1) * (1 + ring * 0.15);
+      ctx.save();
+      ctx.translate(cx + ox * (ring + 1) * 0.2, cy + oy * (ring + 1) * 0.2);
+      ctx.rotate(rot);
+      const grad = ctx.createLinearGradient(-r, 0, r, 0);
+      if (ring === 0) {
+        grad.addColorStop(0, 'rgba(255,61,26,.10)');
+        grad.addColorStop(1, 'rgba(255,61,26,.0)');
+      } else if (ring === 2) {
+        grad.addColorStop(0, 'rgba(0,255,194,.07)');
+        grad.addColorStop(1, 'rgba(0,255,194,.0)');
+      } else if (ring === 4) {
+        grad.addColorStop(0, 'rgba(212,168,67,.08)');
+        grad.addColorStop(1, 'rgba(212,168,67,.0)');
+      } else {
+        grad.addColorStop(0, 'rgba(212,168,67,.04)');
+        grad.addColorStop(1, 'rgba(212,168,67,.0)');
+      }
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = ring === 0 || ring === 4 ? 1.5 : 0.5;
+      ctx.setLineDash(ring % 3 === 0 ? [6, 14] : ring % 3 === 1 ? [2, 8] : []);
+      ctx.beginPath();
+      ctx.arc(0, 0, r, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.restore();
     }
 
-    private resizeHero(): void {
-        const canvas = this.canvasRef.nativeElement;
-        this.hW = canvas.width = canvas.offsetWidth;
-        this.hH = canvas.height = canvas.offsetHeight;
-    }
+    // Orbiting dots — more vivid glows
+    const orbs = [
+      { dist: 100, speed: 1.2, size: 4, col: '#FF3D1A', trail: 8 },
+      { dist: 170, speed: -0.7, size: 3, col: '#00FFC2', trail: 6 },
+      { dist: 240, speed: 0.5, size: 5, col: '#D4A843', trail: 10 },
+      { dist: 310, speed: -0.35, size: 3.5, col: '#FF3D1A', trail: 6 },
+      { dist: 380, speed: 0.45, size: 4, col: '#00FFC2', trail: 8 },
+      { dist: 450, speed: -0.25, size: 3, col: '#D4A843', trail: 5 },
+    ];
 
-    @HostListener('mousemove', ['$event'])
-    onMouseMove(e: MouseEvent): void {
-        const rect = this.canvasRef.nativeElement.getBoundingClientRect();
-        this.hMx = e.clientX - rect.left;
-        this.hMy = e.clientY - rect.top;
-    }
+    orbs.forEach((orb, i) => {
+      const angle = this.heroAngle * orb.speed + (i * Math.PI * 2) / orbs.length;
+      const x = cx + ox * (i + 1) * 0.12 + Math.cos(angle) * orb.dist;
+      const y = cy + oy * (i + 1) * 0.12 + Math.sin(angle) * orb.dist;
 
-    private drawHero = (): void => {
-        const ctx = this.ctx;
-        ctx.clearRect(0, 0, this.hW, this.hH);
-        this.heroAngle += 0.002;
-
-        const cx = this.hW / 2;
-        const cy = this.hH / 2;
-        const ox = (this.hMx - cx) * 0.03;
-        const oy = (this.hMy - cy) * 0.03;
-
-        // Outer rotating rings — more rings, subtler
-        for (let ring = 0; ring < 6; ring++) {
-            const r = 100 + ring * 70;
-            const rot = this.heroAngle * (ring % 2 === 0 ? 1 : -1) * (1 + ring * 0.15);
-            ctx.save();
-            ctx.translate(cx + ox * (ring + 1) * 0.2, cy + oy * (ring + 1) * 0.2);
-            ctx.rotate(rot);
-            const grad = ctx.createLinearGradient(-r, 0, r, 0);
-            if (ring === 0) {
-                grad.addColorStop(0, 'rgba(255,61,26,.10)');
-                grad.addColorStop(1, 'rgba(255,61,26,.0)');
-            } else if (ring === 2) {
-                grad.addColorStop(0, 'rgba(0,255,194,.07)');
-                grad.addColorStop(1, 'rgba(0,255,194,.0)');
-            } else if (ring === 4) {
-                grad.addColorStop(0, 'rgba(212,168,67,.08)');
-                grad.addColorStop(1, 'rgba(212,168,67,.0)');
-            } else {
-                grad.addColorStop(0, 'rgba(212,168,67,.04)');
-                grad.addColorStop(1, 'rgba(212,168,67,.0)');
-            }
-            ctx.strokeStyle = grad;
-            ctx.lineWidth = ring === 0 || ring === 4 ? 1.5 : 0.5;
-            ctx.setLineDash(ring % 3 === 0 ? [6, 14] : ring % 3 === 1 ? [2, 8] : []);
-            ctx.beginPath();
-            ctx.arc(0, 0, r, 0, Math.PI * 2);
-            ctx.stroke();
-            ctx.setLineDash([]);
-            ctx.restore();
-        }
-
-        // Orbiting dots — more vivid glows
-        const orbs = [
-            { dist: 100, speed: 1.2, size: 4, col: '#FF3D1A', trail: 8 },
-            { dist: 170, speed: -0.7, size: 3, col: '#00FFC2', trail: 6 },
-            { dist: 240, speed: 0.5, size: 5, col: '#D4A843', trail: 10 },
-            { dist: 310, speed: -0.35, size: 3.5, col: '#FF3D1A', trail: 6 },
-            { dist: 380, speed: 0.45, size: 4, col: '#00FFC2', trail: 8 },
-            { dist: 450, speed: -0.25, size: 3, col: '#D4A843', trail: 5 },
-        ];
-
-        orbs.forEach((orb, i) => {
-            const angle = this.heroAngle * orb.speed + (i * Math.PI * 2) / orbs.length;
-            const x = cx + ox * (i + 1) * 0.12 + Math.cos(angle) * orb.dist;
-            const y = cy + oy * (i + 1) * 0.12 + Math.sin(angle) * orb.dist;
-
-            // Trail
-            for (let t = 0; t < orb.trail; t++) {
-                const ta = angle - t * 0.06;
-                const tx = cx + ox * 0.12 + Math.cos(ta) * orb.dist;
-                const ty = cy + oy * 0.12 + Math.sin(ta) * orb.dist;
-                ctx.beginPath();
-                ctx.arc(tx, ty, orb.size * (1 - t / orb.trail) * 0.5, 0, Math.PI * 2);
-                const alpha = ((1 - t / orb.trail) * 0.12).toFixed(2);
-                ctx.fillStyle = orb.col + Math.round(parseFloat(alpha) * 255).toString(16).padStart(2, '0');
-                ctx.fill();
-            }
-
-            // Glow
-            const grd = ctx.createRadialGradient(x, y, 0, x, y, orb.size * 5);
-            grd.addColorStop(0, orb.col + 'AA');
-            grd.addColorStop(1, orb.col + '00');
-            ctx.beginPath();
-            ctx.arc(x, y, orb.size * 4, 0, Math.PI * 2);
-            ctx.fillStyle = grd;
-            ctx.fill();
-
-            // Dot
-            ctx.beginPath();
-            ctx.arc(x, y, orb.size, 0, Math.PI * 2);
-            ctx.fillStyle = orb.col;
-            ctx.fill();
-        });
-
-        // Central glow — layered
-        const cg = ctx.createRadialGradient(cx, cy, 0, cx, cy, 100);
-        cg.addColorStop(0, 'rgba(212,168,67,.06)');
-        cg.addColorStop(0.5, 'rgba(212,168,67,.02)');
-        cg.addColorStop(1, 'rgba(212,168,67,0)');
+      // Trail
+      for (let t = 0; t < orb.trail; t++) {
+        const ta = angle - t * 0.06;
+        const tx = cx + ox * 0.12 + Math.cos(ta) * orb.dist;
+        const ty = cy + oy * 0.12 + Math.sin(ta) * orb.dist;
         ctx.beginPath();
-        ctx.arc(cx, cy, 100, 0, Math.PI * 2);
-        ctx.fillStyle = cg;
+        ctx.arc(tx, ty, orb.size * (1 - t / orb.trail) * 0.5, 0, Math.PI * 2);
+        const alpha = ((1 - t / orb.trail) * 0.12).toFixed(2);
+        ctx.fillStyle = orb.col + Math.round(parseFloat(alpha) * 255).toString(16).padStart(2, '0');
         ctx.fill();
+      }
 
-        this.animId = requestAnimationFrame(this.drawHero);
-    };
+      // Glow
+      const grd = ctx.createRadialGradient(x, y, 0, x, y, orb.size * 5);
+      grd.addColorStop(0, orb.col + 'AA');
+      grd.addColorStop(1, orb.col + '00');
+      ctx.beginPath();
+      ctx.arc(x, y, orb.size * 4, 0, Math.PI * 2);
+      ctx.fillStyle = grd;
+      ctx.fill();
 
-    ngOnDestroy(): void {
-        cancelAnimationFrame(this.animId);
-        window.removeEventListener('resize', this.resizeHandler);
-    }
+      // Dot
+      ctx.beginPath();
+      ctx.arc(x, y, orb.size, 0, Math.PI * 2);
+      ctx.fillStyle = orb.col;
+      ctx.fill();
+    });
+
+    // Central glow — layered
+    const cg = ctx.createRadialGradient(cx, cy, 0, cx, cy, 100);
+    cg.addColorStop(0, 'rgba(212,168,67,.06)');
+    cg.addColorStop(0.5, 'rgba(212,168,67,.02)');
+    cg.addColorStop(1, 'rgba(212,168,67,0)');
+    ctx.beginPath();
+    ctx.arc(cx, cy, 100, 0, Math.PI * 2);
+    ctx.fillStyle = cg;
+    ctx.fill();
+
+    this.animId = requestAnimationFrame(this.drawHero);
+  };
+
+  ngOnDestroy(): void {
+    cancelAnimationFrame(this.animId);
+    window.removeEventListener('resize', this.resizeHandler);
+  }
 }

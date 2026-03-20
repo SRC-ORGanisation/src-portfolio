@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy, ChangeDetectionStrategy, NgZone } from '@angular/core';
 
 @Component({
     selector: 'app-cursor',
@@ -25,6 +25,8 @@ export class CursorComponent implements AfterViewInit, OnDestroy {
     private cy = 0;
     private animId = 0;
     private hoverObserver!: MutationObserver;
+
+    constructor(private ngZone: NgZone) {}
 
     private mouseMoveHandler = (e: MouseEvent) => {
         this.mx = e.clientX;
@@ -62,19 +64,22 @@ export class CursorComponent implements AfterViewInit, OnDestroy {
             }
         }
 
-        document.addEventListener('mousemove', this.mouseMoveHandler);
-        document.addEventListener('click', this.clickHandler);
+        // Run outside Angular to prevent Change Detection on every single mousemove and animation frame
+        this.ngZone.runOutsideAngular(() => {
+            document.addEventListener('mousemove', this.mouseMoveHandler);
+            document.addEventListener('click', this.clickHandler);
 
-        this.animateCursor();
+            this.animateCursor();
 
-        // Delay hover setup to let other components render
-        setTimeout(() => this.setupHoverListeners(), 2500);
+            // Delay hover setup to let other components render
+            setTimeout(() => this.setupHoverListeners(), 2500);
 
-        // Watch for new elements
-        this.hoverObserver = new MutationObserver(() => {
-            this.setupHoverListeners();
+            // Watch for new elements
+            this.hoverObserver = new MutationObserver(() => {
+                this.setupHoverListeners();
+            });
+            this.hoverObserver.observe(document.body, { childList: true, subtree: true });
         });
-        this.hoverObserver.observe(document.body, { childList: true, subtree: true });
     }
 
     private animateCursor = (): void => {

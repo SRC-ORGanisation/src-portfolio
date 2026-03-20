@@ -11,8 +11,6 @@ import { MagneticDirective } from '../../directives/magnetic.directive';
         <span class="logo-s">S</span><span class="logo-dot">·</span><span class="logo-r">R</span><span class="logo-dot">·</span><span class="logo-c">C</span>
       </div>
       <ul class="nav-links">
-        <li><a href="#story">Origin</a></li>
-        <li><a href="#team">Team</a></li>
         <li><a href="#work">Work</a></li>
         <li><a href="#services">Services</a></li>
       </ul>
@@ -26,23 +24,24 @@ import { MagneticDirective } from '../../directives/magnetic.directive';
       left: 50%;
       transform: translateX(-50%);
       z-index: 500;
-      padding: 16px 40px;
+      padding: 12px 24px 12px 32px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      width: calc(100% - 48px);
-      max-width: 1400px;
+      width: clamp(300px, 90vw, 800px);
       transition: all .5s cubic-bezier(.16,1,.3,1);
-      border-radius: 16px;
-      background: transparent;
-    }
-    nav.scrolled {
-      padding: 14px 36px;
-      background: rgba(3, 3, 10, .75);
+      border-radius: 100px;
+      background: rgba(3, 3, 10, .4);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
-      border: 1px solid rgba(212, 168, 67, .08);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(255,255,255,.03);
+      border: 1px solid rgba(255, 255, 255, .05);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, .4);
+    }
+    nav.scrolled {
+      background: rgba(3, 3, 10, .75);
+      border: 1px solid rgba(255, 255, 255, .1);
+      box-shadow: 0 15px 50px rgba(0, 0, 0, .6);
+      padding: 10px 20px 10px 28px;
     }
     nav.nav-hidden {
       transform: translateX(-50%) translateY(-120%);
@@ -61,7 +60,7 @@ import { MagneticDirective } from '../../directives/magnetic.directive';
     .logo-dot { color: rgba(242,237,228,.2); font-size: 1.4rem; margin: 0 2px; }
     .nav-links {
       display: flex;
-      gap: 48px;
+      gap: 32px;
       list-style: none;
     }
     .nav-links a {
@@ -92,29 +91,30 @@ import { MagneticDirective } from '../../directives/magnetic.directive';
       font-size: .6rem;
       letter-spacing: 2px;
       text-transform: uppercase;
-      padding: 10px 24px;
-      background: transparent;
-      border: 1px solid rgba(212, 168, 67, .3);
-      color: var(--gold);
+      padding: 12px 28px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      color: var(--white);
       text-decoration: none;
       transition: all .4s cubic-bezier(.16,1,.3,1);
       position: relative;
       overflow: hidden;
-      border-radius: 8px;
+      border-radius: 100px;
     }
     .nav-btn::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(212,168,67,.15), rgba(255,61,26,.1));
-      transform: translateY(101%);
-      transition: transform .4s cubic-bezier(.16,1,.3,1);
-      border-radius: 8px;
+      background: linear-gradient(135deg, var(--gold), var(--ember));
+      opacity: 0;
+      transition: opacity .4s cubic-bezier(.16,1,.3,1);
+      border-radius: 100px;
+      z-index: 0;
     }
-    .nav-btn:hover::before { transform: translateY(0); }
+    .nav-btn:hover::before { opacity: 1; }
     .nav-btn:hover {
-      border-color: rgba(212, 168, 67, .5);
-      box-shadow: 0 0 20px rgba(212,168,67,.1);
+      border-color: rgba(255,255,255,0);
+      box-shadow: 0 0 30px rgba(255,61,26,.3);
     }
     .nav-btn span { position: relative; z-index: 1; }
 

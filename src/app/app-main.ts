@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CursorComponent } from './components/cursor/cursor.component';
 import { ParticleCanvasComponent } from './components/particle-canvas/particle-canvas.component';
-import { LoaderComponent } from './components/loader/loader.component';
 import { NavComponent } from './components/nav/nav.component';
 import { HeroComponent } from './components/hero/hero.component';
 import { MarqueeComponent } from './components/marquee/marquee.component';
@@ -18,9 +17,7 @@ import { FooterComponent } from './components/footer/footer.component';
   selector: 'app-main',
   standalone: true,
   imports: [
-    CursorComponent,
     ParticleCanvasComponent,
-    LoaderComponent,
     NavComponent,
     HeroComponent,
     MarqueeComponent,
@@ -34,8 +31,6 @@ import { FooterComponent } from './components/footer/footer.component';
     FooterComponent,
   ],
   template: `
-    <app-cursor />
-    <app-loader />
     <app-particle-canvas />
     <app-nav />
     <app-hero />

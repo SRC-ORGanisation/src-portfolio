@@ -1,8 +1,10 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-profile-ravi',
   standalone: true,
+  imports: [RouterLink],
   template: `
     <div class="profile-page r-theme">
       <!-- Background Effects -->
@@ -10,7 +12,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
       <div class="p-bg-glow"></div>
       
       <!-- Nav back -->
-      <a href="/" class="p-back">
+      <a routerLink="/" class="p-back">
         <span class="p-arrow">←</span>
         <span>Back</span>
       </a>
